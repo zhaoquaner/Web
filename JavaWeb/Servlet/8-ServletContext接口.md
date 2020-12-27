@@ -19,7 +19,7 @@ String value = servletContext = (String)servletContext.getAttribute("name");
 
 
 
-		#### 获取web站点配置的信息
+#### 获取web站点配置的信息
 
 如果想要让所有Servlet都能够获取连接数据库的信息，不可能在web.xml给每个Servlet都配置，太麻烦，web.xml文件支持对整个站点进行配置参数信息，所有的Servlet都可以拿到该配置信息。
 

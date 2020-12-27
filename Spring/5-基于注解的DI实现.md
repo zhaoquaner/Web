@@ -25,7 +25,7 @@ context是指对应的命名空间，`xmlns:context="http://www.springframework.
 有三种方式
 
 1. 使用多个`<context:component-scan base-package="" />`语句，指定不同的包
-2. 使用分隔符(; 或 ,)分割多个包名，例如`<context:component-scan base-package="org.example.package1;org.example.package2"`
+2. 使用分隔符; 或 ,分割多个包名，例如`<context:component-scan base-package="org.example.package1;org.example.package2"`
 3. 指定需要扫描的所有包的父包，例如package1和package2的父包是org.example，那么就直接指定这个包即可
 
 

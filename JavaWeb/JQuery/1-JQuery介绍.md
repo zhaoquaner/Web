@@ -13,8 +13,8 @@ JQuery语法是通过选取HTML元素来执行一些操作。
 选择器和CSS差不多，有这么几种
 
 - 标签元素选择器：使用标签名称来获取元素数组，例如 $("p") ，表示获取所有<p>
-- id选择器：使用唯一的id来选取指定元素，例如 $("#test")，表示获取id为test的元素，注意 "#"
-- .class选择器：使用类选择器来选取元素，例如 $(".test")，获取所有class为test的元素，注意"."
+- id选择器：使用唯一的id来选取指定元素，例如 $("#test")，表示获取id为test的元素，**注意 "#"**
+- .class选择器：使用类选择器来选取元素，例如 $(".test")，获取所有class为test的元素，**注意"."**
 - 括号中可以直接填DOM对象，例如 `var Obj = document.getElementById("test");$(Obj).hide()`
 
 除此之外，还可以通过属性来选取，
@@ -59,7 +59,7 @@ JQuery对象转为DOM对象：语法，从数组中获取第一个对象，第�
 在js中，要将js代码写在`window.onload() = function(){}`中，类似的，在JQuery中，也有几种写法。
 
 - 使用`$(document).ready(function(){})`，将代码写到function函数中，用$符号将document转换为JQuery对象，使用该对象的ready方法，类似window.onload
-- 是上面的简洁写法，即`$(function({}))`，一般使用这种多一些
+- 是上面的简洁写法，即`$(function(){})`，一般使用这种多一些
 
 除此之外，`jQuery(function(){})`和`window.jQuery(function({}))`也是等价的。
 

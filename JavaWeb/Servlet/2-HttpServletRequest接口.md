@@ -6,7 +6,7 @@
 
 - HttpServletRequest接口是由Http服务器负责提供
 - HttpServletRequest接口负责在doGet/doPost方法运行时读取Http协议包中的信息
-- 将HttpServletRequest接口修饰的对象叫做请求对象
+- 用HttpServletRequest接口修饰的对象叫做请求对象
 
 
 
@@ -26,4 +26,4 @@ Get和Post方式对应的doGet和doPost方法使用方法基本一样，**但有
 
 请求头中二进制内容由Tomcat解码，Tomcat9.0默认使用UTF-8进行解码，请求体中二进制内容由当前request对象负责解码，**request默认使用 ISO-8859-1解码，无法解码中文。**
 
-所以在Post请求方式下，在读取请求体中内容之前，要让请求对象使用utf-8字符集进行解码，使用`request.setCharacterEncoding("UTF-8");`，即可改变字符集为UTF-8。
+所以**在Post请求方式下，在读取请求体中内容之前**，要让请求对象使用utf-8字符集进行解码，使用`request.setCharacterEncoding("UTF-8");`，即可改变字符集为UTF-8。

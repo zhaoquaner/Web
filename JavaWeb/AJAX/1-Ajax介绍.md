@@ -16,7 +16,7 @@ Ajax是用来做局部刷新的，即在不重新加载刷新整个页面的同�
 
 3. 初始化异步请求对象
 
-    异步对象有一个open方法，xmlHttp.open(请求方式get |post, 访问地址，同步|异步请求(默认为true，即异步))
+    异步对象有一个open方法，`xmlHttp.open(请求方式 get |post, 访问地址，同步|异步请求(默认为true，即异步))`
 
     例如`xmlHttp.open("get", "loginServlet?name=zxpwd=123", true);`
 
@@ -32,11 +32,11 @@ XMLHttpRequest有三个重要属性：
 
 1. onreadystatechange属性：一个函数，每当readyState属性改变时，会调用该函数
 2. readyState属性：表示XMLHttpRequest请求的状态，从0到4发生变化
-    - 0：请求未出初始化，创建异步请求对象
+    - 0：请求未初始化，创建异步请求对象
     - 1：初始化异步请求对象，xmlHttp.open(请求方式，请求地址，true)
-    - 异步对象发送请求，xmlHttp.send()
-    - 异步对象介绍应答数据，从服务器端返回数据，XMLHttpRequest内部处理
-    - 异步对象已经将数据解析完毕，此时才可读取数据
+    - 2：异步对象发送请求，xmlHttp.send()
+    - 3：异步对象介绍应答数据，从服务器端返回数据，XMLHttpRequest内部处理
+    - 4：异步对象已经将数据解析完毕，此时才可读取数据
 3. status属性：
     - 200：‘OK’
     - 404：未找到页面

@@ -59,7 +59,7 @@ Java 的简单类型包括基本数据类型和String。其他的都是引用数
 
 
 
-**注意：
+**注意：**
 
 - **如果要使用设值注入，那么属性必须有对应的set方法。并且spring只是调用对应set方法，至于set方法里面语句，spring不关心。**
 
@@ -73,7 +73,7 @@ Java 的简单类型包括基本数据类型和String。其他的都是引用数
 
 ### bean一些其他属性
 
-**
+
 
 - ```xml
     <bean id="" class="" >
@@ -87,7 +87,7 @@ Java 的简单类型包括基本数据类型和String。其他的都是引用数
 
     **并且，当使用单例，对象在创建IOC容器时创建；使用多例，对象在使用时才创建。**
 
-- lazy-init属性：它值对singleton的对象有效，默认为false。即在IOC容器创建时创建该对象。如果指定为true，那么该对象会在使用它时才创建出来
+- lazy-init属性：它只对singleton的对象有效，默认为false。即在IOC容器创建时创建该对象。如果指定为true，那么该对象会在使用它时才创建出来
 
 - init-method和destory-method：想要在对象创建之后，执行某个方法，指定init-method属性；
 
