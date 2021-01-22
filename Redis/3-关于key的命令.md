@@ -13,7 +13,7 @@ Redis是key-value型数据库。所以有操作key的一类命令，同样也有
 通配符：
 
 			1. *：表示0-多个字符，keys *代表查询所有key
-   			2. ?：表示单个字符，例如keys hel?o，可匹配hello，helqo等
+			2. ?：表示单个字符，例如keys hel?o，可匹配hello，helqo等
 
 <img src="https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/image-20210101131747885.png" alt="image-20210101131747885" style="zoom:80%;" />
 
