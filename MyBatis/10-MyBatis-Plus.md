@@ -527,3 +527,583 @@ MyBatis-Plus实现乐观锁非常简单。
 
 
 
+## 查询操作
+
+`BaseMapper`有几种查询方法：
+
+<img src="https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/image-20210221130459868.png" alt="image-20210221130459868" style="zoom:67%;" />
+
+
+
+挨个介绍：
+
+- `List<T> selectBatchIds(Collection<? extends Serializable>)`：以Id为查询条件做批量查询，即可同时查询多个Id匹配的行，参数是一个集合，可以是List、Set和Queue，返回值是一个List集合
+
+    例子：
+
+    ```java
+        @Test
+        public void testSelect() {
+            List<Student> students = studentMapper.selectBatchIds(Arrays.asList(1001, 1002, 1003));
+            students.forEach(System.out::println);
+        }
+    ```
+
+    结果：
+
+    ​	![image-20210221131546875](https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/image-20210221131546875.png)
+
+- `T selectById(Serializable)`：单个查询，返回值是对应实体类
+
+    例子：
+
+    ```java
+        @Test
+        public void testSelect() {
+            Student student = studentMapper.selectById(1001);
+            System.out.println(student);
+        }
+    ```
+
+    运行结果：
+
+    <img src="https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/image-20210221131708309.png" alt="image-20210221131708309" style="zoom:150%;" />
+
+- `List<T> selectByMap(Map<String, Object>)`：条件查询，使用Map对象，key是String，代表属性名；Object代表属性值。多个key/value对，使用and连接。
+
+    例子：
+
+    ```java
+        @Test
+        public void testSelect() {
+            HashMap map = new HashMap();
+            map.put("name", "刘备");
+            List<Student> students = studentMapper.selectByMap(map);
+            students.forEach(System.out::println);
+        }
+    ```
+
+    
+
+    运行结果：
+
+    ![image-20210221132145371](https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/image-20210221132145371.png)
+
+    
+
+    例子：
+
+    ```java
+        @Test
+        public void testSelect() {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("name", "刘备");
+            map.put("age", "76");
+            List<Student> students = studentMapper.selectByMap(map);
+            students.forEach(System.out::println);
+        }
+    ```
+
+    运行结果：
+
+    ![image-20210221132308173](https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/image-20210221132308173.png)
+
+
+
+
+
+后面七个方法都使用了Wrapper条件构造类来设定查询条件。后面再讲。
+
+
+
+
+
+## 删除操作
+
+首先来讲一下逻辑删除和物理删除。
+
+### 逻辑删除
+
+逻辑删除的本质就是更新或者修改操作。它并不是真的把数据删除。而是在表中将对应的是否删除标识(如deleted属性或is_delete属性)，做修改操作。例如0是未删除，1是删除。如果该字段修改为1，那么在逻辑上数据是被删除的，但是数据依然存在在数据库中。
+
+### 物理删除
+
+与之对应的就是物理删除，就是实实在在的删除。数据不会存在在数据库中。
+
+
+
+这两种删除的一个应用就是回收站。在将文件加入回收站时，并不会删除，而只是把对应删除标识修改，从回收站恢复该文件，则再修改标识，这是逻辑删除；而清空回收站就是物理删除。
+
+
+
+### MyBatis-Plus的删除操作
+
+几个方法：
+
+- `int delete(Wrapper<T>)`：使用Wrapper构造条件删除
+- `deleteById(Serializable)`：根据主键删除
+- `deleteByMap(Map<String, Object>)`：根据Map集合删除
+- `deleteBatchIds(Collection<? extends Serializable>)`：根据集合删除
+
+用法基本都和查询操作差不多。不多讲。
+
+重点讲一下如何实现逻辑删除。
+
+### 实现逻辑删除
+
+1. 在表中添加deleted字段，类型为boolean或int，默认值是false或0，不为空。
+
+2. 在配置文件中配置：
+
+    ```properties
+    mybatis-plus.global-config.db-config.logic-not-delete-value=0
+    mybatis-plus.global-config.db-config.logic-delete-value=1
+    ```
+
+3. 在实体类deleted属性上添加注解`@TableLogic`
+
+    ```java
+        @TableLogic
+        private Boolean deleted;
+    ```
+
+    就可以了。
+
+实现了逻辑删除后，MyBatis-Plus一系列CRUD操作会发生改变：
+
+- 插入操作：不作限制，推荐字段在数据库设置默认值
+- 查询操作：追加where条件来过滤已删除数据，如`where deleted = 0`
+- 更新操作：追加where条件防止更新已删除数据
+- 删除操作：转变为更新操作，即`update tablename set deleted = 1 where ...`
+
+
+
+字段类型支持说明：
+
+- 支持所有数据类型，推荐使用Integer、Boolean和LocalDateTime
+- 如果数据库字段使用datetime，逻辑未删除值和已删除值支持配置为字段串`null`，另一个值致辞配置为函数来获取值如`now()`
+
+例子：
+
+删除操作：
+
+```java
+    @Test
+    public void testDelete() {
+        int i = studentMapper.deleteById(1044);
+        System.out.println(i);
+        System.out.println(i == 1 ? "删除成功" : "删除失败");
+    }
+```
+
+结果：
+
+![image-20210221140256573](https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/image-20210221140256573.png)
+
+
+
+查询操作：
+
+```java
+    @Test
+    public void selectAll() {
+        List<Student> students = studentMapper.selectList(null);
+        students.forEach(System.out::println);
+    }
+```
+
+结果：
+
+![image-20210221140352545](https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/image-20210221140352545.png)
+
+
+
+
+
+## 条件构造器
+
+MyBatis-Plus有一个条件构造抽象类Wrapper，它是用来构造复杂的where条件的。
+
+Wrapper有几个子类：
+
+<img src="https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/image-20210221141448914.png" alt="image-20210221141448914" style="zoom:80%;" />
+
+
+
+主要就分为查询和更新对应Wrapper类。
+
+
+
+### AbstractWrapper
+
+
+
+首先介绍抽象类AbstractWrapper有的方法：
+
+注意：
+
+- 出现的方法中第一个形参condition表示该条件是否加入最后生成的sql中
+- 在形参中出现的R为泛型，在普通wrapper中是String，在LanbdaWrapper中是函数
+- 以下方法出现的`R column`均表示数据库字段，而不是实体类数据库字段名。
+- 使用中如果形参的Map或List为空，则不会加入最后生成的sql中
+
+
+
+为了方便，不会再写含有形参condition的方法。condition形参永远放在第一个参数位置。
+
+方法：
+
+- `allEq(Map<R, V> params)`<br>`allEq(Map<R, V> params, boolean null2IsNull)`<br>
+
+    说明：
+
+    全部相等(或个别isNull)<br>`params`：key为数据库字段名，value为字段值<br>`null2IsNull`：为true则在map的value为空时调用`isNull`方法，false则忽略vaue为空的字段
+
+    示例：
+
+    `allEq({id:1, name:"Jack", age :null})`-->`id = 1 and name = Jack and age is null`
+
+    `allEq({id:1, name:"Jack", age :null}, false)`-->`id = 1 and name = Jack`
+
+- ------
+
+    `between(R column, Object val1, Object val2)`
+
+    `notBetween(R column, Object val1, Object val2)`
+
+    说明：前两个表示指定字段值在设定两个值之间，闭区间，即`[2,6]`；后两个方法表示不在两个设定值之间，开区间，即($-\infty$, 2) & (6, $+\infty$)
+
+    示例：
+
+    `between("age", 18 ,30)`-->`age between 18 and 30`
+
+    `notBetween("age", 18 ,30)`-->`age not between 18 and 30`
+
+    ---
+
+    
+
+- `like(R column Object val)`
+
+    `notLike(R column, Object val)`
+
+    说明：Like '%值val%'；NotLike '%值val%'
+
+    示例：
+
+    `like("name", 'k')`-->`name like '%k%'`
+
+    `notLike("name", 'k')`-->`name not like '%k%'`
+
+    
+
+    根据`%`位置，还有`likeLeft(R column, Object val)`和`likeRight(R column, Object val)`两个方法。
+
+    分别对应`%`放在左边和右边。
+
+    ---
+
+- `isNull(R column)`
+
+    `isNotNull(R column)`
+
+    说明：
+
+    - 第一个判断字段为空
+    - 第二个判断字段不为空
+
+    示例：
+    `isNull("name")`-->`name is null`
+
+    `isNotNull("name")`-->`name is not null`
+
+    ---
+
+- `is(R column, Collection<?> value)`
+
+    `is(R column, Object... values)`
+
+      
+
+    `notIn(R column, Collection<?> value)`
+
+    `notIn(R column, Object... values)`
+
+    说明：
+
+    - 前两个使用in关键词
+    - 后两个使用not in关键词
+
+    示例：
+
+    `in("age", {1, 2, ,3})`-->`age in (1, 2, 3)`
+
+    `in("age", 1, 2, 3)`-->`age in (1, 2, 3)`
+
+    `Notin`和`in`用法一样
+
+    ---
+
+-  `nested(Consumer<Param> consumer)`
+
+    表示正常嵌套，只加括号，不带and或or
+
+    例如：`nested(i->i.eq("name", 'Jack').ne("status", 1))`-->`(name = 'Jack' and status = 1)`
+
+    
+    
+    `apply(String applySql, Object... params)`
+    
+    拼接sql
+    
+    注意：该方法可用于数据库函数动态入参的params对应前面的applySql内部的index部分，这样不会有sql注入风险，反之会有。
+    
+    例如：`apply("id = 1")`-->`id = 1`
+    
+    ​			`apply("date_format(dataColumn, '%Y-%m-%d') = '2008-08-08'")`-->`date_format(dataColumn, '%Y-%m-%d') = '2008-08-08'`
+    
+    ---
+    
+- `eq(R column, Object val)`
+
+    说明：等于=
+
+    示例：
+
+    `eq("name"， "赵四")`-->`name = '赵四'`
+
+
+
+与eq类似的还有：
+
+- ne：not equal，不相等
+- gt：greater than，大于
+- ge：greater equal，大于等于
+- lt：less than，小于
+- le：小于等于
+
+还有一些简单的方法，看名字就知道作用和用法：
+
+- `orderByDesc`
+- `orderByAsc`
+- `groupBy`
+- `having`
+- `esists`
+- `notExists`
+
+
+
+还有两个方法：
+
+- `or()`
+- `and()`
+
+表示使用or或and拼接。
+
+注意：主动调用`or`表示下一个方法使用or拼接。不调用则默认使用and。
+
+`or(Consumer<Param> consumer)`
+
+表示or嵌套。
+
+例如：
+
+`or(i -> i.eq("name", 'Jack').ne("status", 1))`-->`or (name = 'Jack' and status <> 1)`
+
+
+
+###  QueryWrapper
+
+`select(String... sqlSelect)`
+
+用于设置查询字段。
+
+例如：
+
+`select("id", "name", "age")`
+
+
+
+### UpdateWrapper
+
+有两个方法：
+
+
+
+- `set(String column, Object val)`
+
+    SQL的set字段
+
+    例如`set("name", "Jack")`
+
+    `set("name", "")`-->字段值变为空字符串
+
+    `set("name", null)`-->字段值变为null
+
+- `setSql(String sql)`
+
+    直接设置set部分的sql语句
+
+    如：`setSql("name='Jack'")`
+
+
+
+
+
+
+
+## 代码生成器
+
+使用代码生成器自动生成代码。
+
+
+
+```java
+public class DataAutoGenerator {
+
+
+    public static void main(String[] args) {
+        //创建自动生成器对象
+        AutoGenerator ag = new AutoGenerator();
+        
+        //创建全局配置对象
+        GlobalConfig gc = new GlobalConfig();
+        //获取项目绝对路径
+        String projectPath = System.getProperty("user.dir");
+        //设置输出目录
+        gc.setOutputDir(projectPath + "/12-MyBatis_Plus/src/main/java");
+        //设置作者
+        gc.setAuthor("zhao-xin");
+        //设置生成后不打开输出目录
+        gc.setOpen(false);
+        //设置Service类命名
+        gc.setServiceName("%sService");
+        //开启 swagger2 模式
+        gc.setSwagger2(true);
+        //添加全局配置到自动生成器
+        ag.setGlobalConfig(gc);
+
+        //创建数据源对象，并配置数据源。这部分比较熟悉，不细讲了。
+        DataSourceConfig dsf = new DataSourceConfig();
+        dsf.setUrl("jdbc:mysql://localhost:3306/test");
+        dsf.setDriverName("com.mysql.cj.jdbc.Driver");
+        dsf.setUsername("root");
+        dsf.setPassword("bigbang2022");
+        dsf.setDbType(DbType.MYSQL);
+        ag.setDataSource(dsf);
+
+        //配置包
+        PackageConfig pc = new PackageConfig();
+        //配置父包，entity等包生成在该包中
+        pc.setParent("com.example");
+        //设置实体类，数据访问层，服务层和控制层的名称
+        pc.setEntity("entity");
+        pc.setMapper("mapper");
+        pc.setService("service");
+        pc.setController("controller");
+        //添加到自动生成器中
+        ag.setPackageInfo(pc);
+
+
+
+        // 策略配置
+        StrategyConfig strategy = new StrategyConfig();
+        //设置命名策略为下划线转驼峰
+        strategy.setNaming(NamingStrategy.underline_to_camel);
+        //设置列名命名策略也为下划线转驼峰
+        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+        //是否开启实体类使用lombok
+        strategy.setEntityLombokModel(true);
+        //使用Rest风格
+        strategy.setRestControllerStyle(true);
+
+        //设置需要生成的表名
+        strategy.setInclude("student");
+        
+        strategy.setControllerMappingHyphenStyle(true);
+        
+        //设置逻辑删除字段
+        strategy.setLogicDeleteFieldName("deleted");
+        //设置乐观锁字段
+        strategy.setVersionFieldName("version");
+
+        //设置自动填充字段
+        List<TableFill> list = new ArrayList<>();
+        list.add(new TableFill("create_time", FieldFill.INSERT));
+        list.add(new TableFill("update_time", FieldFill.INSERT_UPDATE));
+        strategy.setTableFillList(list);
+        //添加到自动生成器对象
+        ag.setStrategy(strategy);
+
+        //设置模板引擎
+        ag.setTemplateEngine(new VelocityTemplateEngine());
+        
+        //执行
+        ag.execute();
+
+
+    }
+}
+
+```
+
+
+
+
+
+
+
+```java
+52.74.223.119 github.com
+199.232.69.194 github.global.ssl.fastly.net
+140.82.114.4 gist.github.com
+185.199.108.153 assets-cdn.github.com
+199.232.96.133 raw.githubusercontent.com
+199.232.96.133 gist.githubusercontent.com
+199.232.96.133 cloud.githubusercontent.com
+199.232.96.133 camo.githubusercontent.com
+199.232.96.133 avatars0.githubusercontent.com
+199.232.96.133 avatars1.githubusercontent.com
+199.232.96.133 avatars2.githubusercontent.com
+199.232.96.133 avatars3.githubusercontent.com
+199.232.96.133 avatars4.githubusercontent.com
+199.232.96.133 avatars5.githubusercontent.com
+199.232.96.133 avatars6.githubusercontent.com
+199.232.96.133 avatars7.githubusercontent.com
+199.232.96.133 avatars8.githubusercontent.com
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
