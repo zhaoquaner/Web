@@ -106,7 +106,7 @@ Shiro在Web项目中使用时，Shiro会自动创建一些默认的过滤器对�
 
 其中anon、authcBasic、authc和user是认证过滤器。perms、roles、ssl、rest、port是授权过滤器。
 
-使用比较多的是anthc、logout和roles。
+使用比较多的是anon、anthc、logout、perms和roles。
 
 
 
