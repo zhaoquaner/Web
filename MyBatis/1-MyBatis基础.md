@@ -18,12 +18,6 @@
 
 
 
-
-
-
-
-
-
 创建数据库表`Student(id int, name varchar(255), email varchar(255), age int)`
 
 其中主键是id。

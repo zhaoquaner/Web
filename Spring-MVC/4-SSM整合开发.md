@@ -1,7 +1,7 @@
 # 4-SSM整合开发
 
 开发思路：
-SpringMVC：管理Controller层对象
+        SpringMVC：管理Controller层对象
 
 Spring：管理Service和dao层，和工具类对象
 

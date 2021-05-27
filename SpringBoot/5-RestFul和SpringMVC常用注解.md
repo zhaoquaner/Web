@@ -50,7 +50,7 @@ REST是一种互联网软件架构设计的风格。但它不是标准的，只�
 
 - 接口命名使用名词，不要有动词。
 
-    例如/student，/users等都输入RESTFul架构。而/addStudent，/deleteUser则不属于。
+    例如/student，/users等都属于RESTFul架构。而/addStudent，/deleteUser则不属于。
 
 - 使用Http的方法来表示不同操作。
 

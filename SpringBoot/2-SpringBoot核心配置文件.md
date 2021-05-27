@@ -6,7 +6,7 @@ SpringBoot有两种核心配置文件格式，一种是`.properties`，另一种
 
 **文件名必须是application。**
 
-
+​	
 
 默认采用`.properties`格式。
 

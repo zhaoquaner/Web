@@ -517,13 +517,75 @@ MyBatis-Plus实现乐观锁非常简单。
 
 
 
-### 总结
+#### 总结
 
 1. 自定义填充处理类不要忘记加注解`@Component`
 2. 实体类属性上记得加注解`TableField`，并指定`fill`属性
 3. 实现乐观锁，一定要先进行查询操作。气死，TM弄了一天。
 
 
+
+
+
+### 分页插件
+
+在配置类中添加：`interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));`
+
+即可注册分页插件，数据库类型是MYSQL。
+
+然后使用Page类或IPage接口都可以。Page类实现了IPage接口。
+
+使用Mapper类的两个方法：
+
+- `<E extends IPage<T>> E selectPage(E page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper);`
+- `<E extends IPage<Map<String, Object>>> E selectMapsPage(E page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper);`
+
+使用上一种方式较多。
+
+
+
+使用方法：
+
+1. 根据给定参数 当前页码和每页数据量创建Page对象。
+2. 在服务层调用mapper对象的上述两个方法
+3. 使用Page对象获得查询到的使用
+
+例子：
+
+1. 创建服务层方法：`public Page<Categories> list(Page<Categories> page);`
+
+2. 在继承类实现该方法：
+
+    ```java
+        @Override
+        public Page<Categories> list(Page<Categories> page) {
+            Page<Categories> categoriesPage = categoriesMapper.selectPage(page, null);
+            return categoriesPage;
+        }
+    ```
+
+    
+
+3. 使用传入的参数或返回值(这俩是一个Page对象)来获得查询到的数据和相关数据
+
+    
+
+4. 在控制层创建Page对象，并调用服务层方法。
+
+    ```java
+        public void getCategories(Integer pageNumber, Integer limit) {
+            Page<Categories> page = new Page<>(pageNumber, limit);
+            Page<Categories> list = categoriesService.list(page);
+            List<Categories> records = page.getRecords();
+        }
+    ```
+
+
+
+**注意：**
+
+1. 如果自定义方法实现分页，并调用了mapper的分页方法(就是刚说的两个方法)，**如果返回值是Page对象(和例子一样)，那么传来的参数Page对象不能为空，因为返回值Page对象和参数Page对象就是一个对象。**
+2. 如果返回值是List集合，那么参数Page对象就可以为空，表示不进行分页。
 
 
 
@@ -1052,26 +1114,6 @@ public class DataAutoGenerator {
 
 
 
-
-```java
-52.74.223.119 github.com
-199.232.69.194 github.global.ssl.fastly.net
-140.82.114.4 gist.github.com
-185.199.108.153 assets-cdn.github.com
-199.232.96.133 raw.githubusercontent.com
-199.232.96.133 gist.githubusercontent.com
-199.232.96.133 cloud.githubusercontent.com
-199.232.96.133 camo.githubusercontent.com
-199.232.96.133 avatars0.githubusercontent.com
-199.232.96.133 avatars1.githubusercontent.com
-199.232.96.133 avatars2.githubusercontent.com
-199.232.96.133 avatars3.githubusercontent.com
-199.232.96.133 avatars4.githubusercontent.com
-199.232.96.133 avatars5.githubusercontent.com
-199.232.96.133 avatars6.githubusercontent.com
-199.232.96.133 avatars7.githubusercontent.com
-199.232.96.133 avatars8.githubusercontent.com
-```
 
 
 

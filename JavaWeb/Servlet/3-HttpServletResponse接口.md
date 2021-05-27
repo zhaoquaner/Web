@@ -40,5 +40,5 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 
 运行上述代码结果为：
 
-![image-20200803140222729](image/image-20200803140222729.png)
+![image-20200803140222729](https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/image-20200803140222729.png)
 

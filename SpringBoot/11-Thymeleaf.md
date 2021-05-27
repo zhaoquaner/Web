@@ -324,7 +324,7 @@ html文件：
 <div th:insert="base :: footerFragmemnt"></div>
 ```
 
-如果两个文件不再同一级目录，那么就要在引用文件名加上目录。
+如果两个文件不在同一级目录，那么就要在引用文件名加上目录。
 
 
 
@@ -367,7 +367,7 @@ ID选择器语法格式：`文件名:#ID值`
     <div th:insert="~{base::frag('参数1', '参数2')}"></div>
 ```
 
-
+**注意：引用的文件路径一定要从templates下开始写，例如templates目录下有admin目录，该目录有两个文件，side.html和index.html。那么index引用admin文件，就要写`th:replace="admin/side"`才可以，视图解析器才可以解析到。**
 
 
 
@@ -694,10 +694,11 @@ Thymeleaf允许使用`th:*`来选择是否使用这些布尔属性。如`th:sele
 多路选择语句，与`th:case`来使用：
 
 ```html
-<div th:switch="${user.role}">
-    <p th:case="admin">管理员</p>
-    <p th:case="user">普通用户</p>
+<div th:swtich="${role}">
+    <p th:case="admin"></p>
+    <p th:case="user"></p>
 </div>
+    
 ```
 
 ### 定义局部变量

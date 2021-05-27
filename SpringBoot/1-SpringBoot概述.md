@@ -2,7 +2,7 @@
 
 ​		SpringBoot的设计目的是**简化**Spring应用的初始搭建和开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不需要定义样板化的配置。
 
-​		在以往采用SpringMVC+Spring+MyBatis开发时，搭建和整合三大框架，需要做很多工作，配置web.xml。配置Speing和MyBatis。而SpringBoot框架对此开发过程进行了革命性颠覆，完全抛弃了繁琐的xml配置过程，采用大量默认配置来简化开发过程。
+​		在以往采用SpringMVC+Spring+MyBatis开发时，搭建和整合三大框架，需要做很多工作，配置web.xml。配置Spring和MyBatis。而SpringBoot框架对此开发过程进行了革命性颠覆，完全抛弃了繁琐的xml配置过程，采用大量默认配置来简化开发过程。
 
 ​		
 
