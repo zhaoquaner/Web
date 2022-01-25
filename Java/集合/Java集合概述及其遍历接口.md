@@ -4,9 +4,9 @@
 
 Java集合类由两个接口派生而出：Collection和Map，这两个接口又包含了一些子接口和实现类。
 
-继承树为
+继承树
 
-<img src="D:\各种文档\个人文档\学习总结\Java\集合\image\集合接口.png" style="zoom:150%;" />
+<img src="https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/集合接口.png" alt="集合接口" style="zoom:100%;" />
 
 
 
@@ -42,7 +42,7 @@ Collection接口是List、Set和Queue接口的父接口，它包含了几个操�
 
 ## 使用Iterator遍历集合元素
 
-Iterator接口时Collection的父接口，Iterator接口主要用来遍历Collection集合中的元素，Iterator对象也被称为迭代器。有四个方法
+Iterator接口是Collection的父接口，Iterator接口主要用来遍历Collection集合中的元素，Iterator对象也被称为迭代器。有四个方法
 
 - **boolean hasNext()**：如果被迭代的集合元素还没有被遍历完，返回true
 - **Object next()**：返回集合下一个元素
