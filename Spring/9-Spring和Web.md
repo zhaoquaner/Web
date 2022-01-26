@@ -1,16 +1,16 @@
 # 9-Spring和Web
 
-​		在Web项目中使用Spring框架，首先要在web层(这里指Servlet)获取到Spring容器对象。只要获取到了Spring容器，就可以从该容器中获取到Service对象。
+在Web项目中使用Spring框架，首先要在web层(这里指Servlet)获取到Spring容器对象。只要获取到了Spring容器，就可以从该容器中获取到Service对象。
 
-​		那么接下来就要思考在哪里创建Spring容器。
+那么接下来就要思考在哪里创建Spring容器。
 
-​		对于一个web应用来说，Spring容器对象只需要一个就可以了。所以很显然不能直接在Servlet中创建Spring容器，因为虽然Servlet是单例多线程，但多个Servlet都需要用到Spring容器，就会创建多个Spring容器。
+对于一个web应用来说，Spring容器对象只需要一个就可以了。所以很显然不能直接在Servlet中创建Spring容器，因为虽然Servlet是单例多线程，但多个Servlet都需要用到Spring容器，就会创建多个Spring容器。
 
-​		我们想到，对于一个web应用，全局作用域对象ServletContext也只有一个，所以可以在创建全局作用域对象的时候创建Spring容器，并把Spring容器对象存入ServletContext中。
+我们想到，对于一个web应用，全局作用域对象ServletContext也只有一个，所以可以在创建全局作用域对象的时候创建Spring容器，并把Spring容器对象存入ServletContext中。
 
-​		之前学到了全局作用域的监听器接口ServletContextListener，我们可以使用监听器监听全局作用域，当全局作用域创建的时候同时创建Spring容器，并放入全局作用域对象中。
+之前学到了全局作用域的监听器接口ServletContextListener，我们可以使用监听器监听全局作用域，当全局作用域创建的时候同时创建Spring容器，并放入全局作用域对象中。
 
-​		可以自定义全局作用域监听器接口实现类，也可以使用spring的一个模块spring-web提供的实现类ContextLoaderListener。
+可以自定义全局作用域监听器接口实现类，也可以使用spring的一个模块spring-web提供的实现类ContextLoaderListener。
 
 
 
