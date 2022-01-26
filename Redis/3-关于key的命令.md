@@ -110,7 +110,7 @@ Redis是key-value型数据库。所以有操作key的一类命令，同样也有
 
 ## 其他命令
 
-1. rangomkey
+1. randomkey
 
     语法：randomkey
 

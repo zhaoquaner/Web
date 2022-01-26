@@ -144,7 +144,7 @@ Redis一共有5种数据类型：
 
 ### hset
 
-语法：hset key filed value
+语法：hset key field value
 
 作用：向哈希表key中添加field-value键值对，如果key不存在，则新建hash表，执行赋值；如果存在field，则覆盖旧值
 

@@ -6,13 +6,13 @@
 
 
 
-​		MyBatis框架是一个基于Java的持久层(数据访问层)框架，内部封装了JDBC,开发者只需要关注SQL语句本身，将处理加载驱动、创建连接、创建statement、关闭连接、资源等繁琐的过程全都交给MyBatis来处理。
+MyBatis框架是一个基于Java的持久层(数据访问层)框架，内部封装了JDBC,开发者只需要关注SQL语句本身，将处理加载驱动、创建连接、创建statement、关闭连接、资源等繁琐的过程全都交给MyBatis来处理。
 
-​		MyBatis通过XML或注解两种方式将要执行的各种sql语句配置起来，并通过Java对象和sql的动态参数进行映射生成最终的sql语句，最后由MyBatis框架执行sql并将结果映射为java对象返回。
+MyBatis通过XML或注解两种方式将要执行的各种sql语句配置起来，并通过Java对象和sql的动态参数进行映射生成最终的sql语句，最后由MyBatis框架执行sql并将结果映射为java对象返回。
 
 
 
-​		很重要的一个概念是映射，它的意思是数据库中每一行的数据都可以映射为一个Java对象，我们会创建对应的实体类，保持成员变量和表中属性一致。
+很重要的一个概念是映射，它的意思是数据库中每一行的数据都可以映射为一个Java对象，我们会创建对应的实体类，保持成员变量和表中属性一致。
 
 
 
@@ -49,7 +49,7 @@ public interface StudentDao {
 
 在之后，都是以这个作为例子。
 
-		## 使用MyBatis步骤
+## 使用MyBatis步骤
 
 
 
@@ -111,7 +111,7 @@ public interface StudentDao {
 
 ## SQL映射文件
 
-​		该文件是用来写sql语句的，MyBatis框架会执行这些sql
+该文件是用来写sql语句的，MyBatis框架会执行这些sql
 
 ​	
 

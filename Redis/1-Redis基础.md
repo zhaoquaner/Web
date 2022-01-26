@@ -4,17 +4,17 @@
 
 
 
-​		Redis是一个key-value存储系统，数据缓存在内存中，同时Redis会周期性的把更新的数据写入磁盘或修改操作写入追加的记录文件。
+Redis是一个key-value存储系统，数据缓存在内存中，同时Redis会周期性的把更新的数据写入磁盘或修改操作写入追加的记录文件。
 
-​		Redis支持主从同步，数据可以从主服务器上向任意数量的从服务器上同步。
+Redis支持主从同步，数据可以从主服务器上向任意数量的从服务器上同步。
 
-​		Redis的value值支持5种数据类型，分别是字符串String，列表List、集合Set、有序集合zSet和哈希Hash。
+Redis的value值支持5种数据类型，分别是字符串String，列表List、集合Set、有序集合zSet和哈希Hash。
 
 
 
 ## 为啥使用Redis
 
-​		Redis是非关系型数据库，即NoSQL。在NoSQL数据库中数据之间是无联系的，没有关系，数据的结构是松散、可变的。
+Redis是非关系型数据库，即NoSQL。在NoSQL数据库中数据之间是无联系的，没有关系，数据的结构是松散、可变的。
 
 非关系型数据库的优势：
 
@@ -44,7 +44,7 @@
 
 ## Redis简单使用
 
-Window版本的Redis不是真正的Redis，写出Reids数据库的这个人，是基于Linux系统，只写了Linux版本。Windows版本的Redis是微软公司推出的。但是和Linux版本的Redis使用基本相同。
+Window版本的Redis不是真正的Redis，Reids的作者，是基于Linux系统，只写了Linux版本。Windows版本的Redis是微软公司推出的。但是和Linux版本的Redis使用基本相同。
 
 在开发环境中，可以使用Windows，但在实际生产环境中，要使用Linux版本的。
 
@@ -95,7 +95,10 @@ redis-cli.exe是Redis自带的命令行客户端。
 有两种连接reids服务器的方式
 
 - 直接运行redis-cli.exe，这时，默认使用ip 127.0.0.1 端口6379
-- 运行redis-cli.exe，使用选项连接服务器，-h 主机   -p  端口，例如./redis-cli -h 127.0.0.1 -p 6379
+
+- 运行redis-cli.exe，使用选项连接服务器，-h 主机   -p  端口，例如
+
+    `./redis-cli -h 127.0.0.1 -p 6379`
 
 连接远程Redis服务器，还需要修改服务器端配置文件，因为Redis有安全保护措施，默认只有本机才可以访问。
 
