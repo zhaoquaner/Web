@@ -2,8 +2,6 @@
 
 ## MyBatis使用步骤
 
-
-
 先来回顾以下MyBatis的使用步骤：
 
 1. 创建DAO接口
@@ -14,11 +12,7 @@
 6. 使用SqlSession对象获得dao接口的实现类对象
 7. 执行数据库操作
 
-
-
 ## 集成到Spring后需要的改动
-
-
 
 那么将MyBatis集成到Spring中以后。需要改动的有：
 
@@ -33,10 +27,6 @@
 - SqlSessionFactory对象
 - dao对象
 
-
-
-
-
 **注意：MyBatis集成到Spring后，默认是自动提交事务，不需要写`sqlSession.comit();`。**
 
 ## MyBAtis集成到Spring后使用步骤
@@ -44,12 +34,12 @@
 1. 新建Maven项目
 
 2. 加入maven依赖
-
-    - spring依赖
-    - mybatis依赖
-    - mybatis和spring集成的依赖
-    - mysql驱动依赖
-    - spring事务的依赖
+   
+   - spring依赖
+   - mybatis依赖
+   - mybatis和spring集成的依赖
+   - mysql驱动依赖
+   - spring事务的依赖
 
 3. 创建实体类
 
@@ -62,21 +52,13 @@
 7. 创建Service接口和实现类，实现类成员变量是dao对象
 
 8. 创建spring配置文件：声明将mybatis的对象交给spring创建，有：
-
-    - 数据源
-    - SqlSessionFactory
-    - DAO对象
-    - 自定义的Service对象
-
-    
+   
+   - 数据源
+   - SqlSessionFactory
+   - DAO对象
+   - 自定义的Service对象
 
 9. 编写测试代码，获取Service对象，通过service调用dao来操作数据库
-
-    
-
-
-
-
 
 ## 配置数据源
 
@@ -117,10 +99,6 @@
 
 Druid会自动根据url识别驱动类名，所以不需要配置driver。
 
-
-
-
-
 ## 创建SqlSessionFactory对象
 
 在spring文件中配置SqlSessionFactory对象。
@@ -141,10 +119,6 @@ Druid会自动根据url识别驱动类名，所以不需要配置driver。
 第二个<property>标签，是指定mybatis配置文件路径的。**但是需要使用value属性，并且要加上`classpath:`**
 
 在后面写上mybatis的配置文件路径。
-
-
-
-
 
 ## 创建DAO接口对象
 
@@ -171,17 +145,11 @@ Druid会自动根据url识别驱动类名，所以不需要配置driver。
 
 第二个<property>标签，指定的是DAO接口所在的包名，MapperScannerConfigurer会扫描这个包的每个接口，调用getMapper方法创建每个接口的代理对象，也就是DAO对象。
 
-
-
 **创建的dao对象的名字是接口名的首字母小写。**
-
-
 
 ## 创建Service接口和实现类
 
 在service包下，创建表的service接口。并在service.impl包下，创建对应实现类。在实现类里定义dao接口对象成员变量，然后不同方法对应数据库的操作。
-
-
 
 ## 一个例子
 
@@ -198,8 +166,6 @@ public class Student {
 }    
 ```
 
-
-
 在dao包中创建DAO接口StudentDao
 
 ```java
@@ -214,7 +180,7 @@ public interface StudentDao {
 
 ```xml
 <mapper namespace="org.example.dao.StudentDao">
-    
+
     <insert id="insertStudent">
         insert into student values (#{id}, #{name}, #{email}, #{age})
     </insert>
@@ -234,12 +200,12 @@ public interface StudentDao {
         <!--输出日志到控制台-->
         <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
-    
+
     <!--设置别名-->
     <typeAliases>
         <package name="org.example.domain"/>
     </typeAliases>
-    
+
     <!--映射文件配置-->
     <mappers>
         <package name="org.example.dao"/>
@@ -247,8 +213,6 @@ public interface StudentDao {
 
 </configuration>
 ```
-
-
 
 创建service接口和实现类：
 
@@ -282,24 +246,22 @@ public class StudentServiceImpl implements StudentService {
 }
 ```
 
-
-
 创建spring配置文件applicationContext.xml
 
 ```xml
     <!--配置数据源-->
-	<bean id="druid" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="druid" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="jdbc:mysql://localhost:3306/test" />
         <property name="username" value="root" />
         <property name="password" value="*******" />
         <property name="maxActive" value="20" />
     </bean>
-	<!--创建SqlSessionFactory对象-->
+    <!--创建SqlSessionFactory对象-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
         <property name="dataSource" ref="druid" />
         <property name="configLocation" value="classpath:mybatis.xml" />
      </bean>
-	<!--创建dao接口代理对象-->
+    <!--创建dao接口代理对象-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
         <property name="basePackage" value="org.example.dao" />
@@ -324,7 +286,7 @@ public class StudentServiceImpl implements StudentService {
             System.out.println(stu);
         }
     }
-    
+
     @Test
     public void testAddStudent() {
         String config = "applicationContext.xml";
@@ -336,20 +298,12 @@ public class StudentServiceImpl implements StudentService {
     }
 ```
 
-
-
 执行查询操作，运行结果为：
 <img src="https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/image-20201204155239728.png" alt="image-20201204155239728" style="zoom:50%;" />
-
-
 
 执行插入操作，运行结果为：
 
 <img src="https://crayon-1302863897.cos.ap-beijing.myqcloud.com/image/image-20201204155317439.png" alt="image-20201204155317439" style="zoom:50%;" />
-
-
-
-
 
 ## 使用属性文件
 
@@ -366,8 +320,6 @@ xmlns:context="http://www.springframework.org/schema/context"
 标签来设置属性文件的路径
 
 最后通过`${属性文件中设置的key}`来进行访问
-
-
 
 例子：
 
@@ -387,4 +339,3 @@ xmlns:context="http://www.springframework.org/schema/context"
         <property name="maxActive" value="${jdbc.max}" />
     </bean>
 ```
-

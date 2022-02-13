@@ -12,11 +12,11 @@ Spring分为六大模块：
 
 - Spring Core：核心功能，IOC容器，解决对象创建和依赖关系
 - Spring Web：Spring对web模块的支持
-    - 可以和struts整合，让struts的action创建交给spring
-    - spring mvc模式
+  - 可以和struts整合，让struts的action创建交给spring
+  - spring mvc模式
 - Spring DAO：Spring对JDBC操作对的支持
 - Spring ORM：spring对ORM的支持
-    - 既可以和Hibernate整合
-    - 也可以使用spring的Hibernate操作的封装
+  - 既可以和Hibernate整合
+  - 也可以使用spring的Hibernate操作的封装
 - Spring AOP：切面编程
 - SpringEE：spring对JavaEE其他模块的支持

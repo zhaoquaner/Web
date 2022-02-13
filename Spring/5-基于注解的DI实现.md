@@ -1,4 +1,4 @@
-# 	5-基于注解的DI实现
+# 5-基于注解的DI实现
 
 通过注解来配置信息是为了简化IOC容器的配置，注解可以把对象添加到IOC容器中、处理对象依赖关系。
 
@@ -7,8 +7,6 @@
 1. 加入maven的依赖spring-context，加入的同时，也加入了spring-aop的依赖，使用注解必须要使用spring-aop依赖
 2. 在类中加入spring的依赖
 3. 在spring配置文件中，加入一个组件扫描器的标签，来说明注解在项目中的位置
-
-
 
 ## 加入组件扫描器
 
@@ -28,8 +26,6 @@ context是指对应的命名空间，`xmlns:context="http://www.springframework.
 2. 使用分隔符; 或 ,分割多个包名，例如`<context:component-scan base-package="org.example.package1;org.example.package2"`
 3. 指定需要扫描的所有包的父包，例如package1和package2的父包是org.example，那么就直接指定这个包即可
 
-
-
 ## 主要学习的注解
 
 有以下几个：
@@ -42,15 +38,13 @@ context是指对应的命名空间，`xmlns:context="http://www.springframework.
 - @Autowired
 - @Resource
 
-
-
 ### @Component
 
 这个注解用来创建对象，等同于标签bean，
 
 属性：value，表示这个对象的名称，是唯一的。也可以省略value，直接写对象名称，必须加引号
 
-​				如果不写这个属性，那么spring会使用默认的对象名称：类名的首字母小写，例如类名为Student，那么默认名称为                      				student
+​                如果不写这个属性，那么spring会使用默认的对象名称：类名的首字母小写，例如类名为Student，那么默认名称为                                      student
 
 位置：在类的上面
 
@@ -75,12 +69,7 @@ public class Student {
                 '}';
     }
 }
-
 ```
-
-
-
-
 
 ### 与@Component用法类似的三个注解
 
@@ -92,19 +81,15 @@ public class Student {
 
 @Repository，@Service，@Controller是用来给项目对象分层的，它们可以赋予对象不同的角色。是比@Component的功能丰富的。
 
-
-
 当一个类不是以上三个类型，或者不知道是不是这三个类，就可以使用@Component
-
-
 
 ### @Value(简单类型的赋值)
 
-​	用来给简单类型的属性赋值
+​    用来给简单类型的属性赋值
 
-​	属性：value，String类型，表示简单类型的属性值。可不写value，直接写属性值。必须加引号
+​    属性：value，String类型，表示简单类型的属性值。可不写value，直接写属性值。必须加引号
 
-​	位置： 
+​    位置： 
 
 1. 在属性定义上面，不需要set方法，推荐使用这种
 2. 在set方法上面
@@ -132,8 +117,6 @@ public class Student {
 
 当然也可以使用在set方法上，用的很少，不再举例了。
 
-
-
 ### 引用类型的赋值
 
 两个注解@Autowired和@Resource都可以给引用类型赋值。
@@ -146,9 +129,9 @@ public class Student {
 
 属性：required，布尔类型，默认为true
 
-​			当required=ture：表示如果引用类型赋值失败，程序报错，并终止执行
+​            当required=ture：表示如果引用类型赋值失败，程序报错，并终止执行
 
-​			当required=false：表示如果引用类型赋值失败，程序正常运行，引用类型为null
+​            当required=false：表示如果引用类型赋值失败，程序正常运行，引用类型为null
 
 **推荐使用true。**
 
@@ -178,7 +161,6 @@ public class School {
                 '}';
     }
 }
-
 ```
 
 Student的代码：
@@ -203,10 +185,7 @@ public class Student {
                 '}';
     }
 }
-
 ```
-
-
 
 ##### 使用byName方式
 
@@ -215,8 +194,6 @@ public class Student {
 位置
 
 在上面代码@Autowired的上面或者下面加入`@Qualifier(value="mySchool")`，就可以实现byName方式赋值
-
-
 
 #### @Resource
 
@@ -236,8 +213,6 @@ public class Student {
 - **如果没有指定name属性，会使用byType；如果指定了name属性，那么使用byName，如果找不到，会报错**
 
 - **这个注解在javax包，也就是java的拓展包里，在java 11以后，jdk不再包括javax，所以需要在pom.xml中手动导入。**
-
-
 
 例子：
 
@@ -261,14 +236,11 @@ public class Student {
                 '}';
     }
 }
-
 ```
 
 可以看到，@Resource没有使用name属性，但是程序可以运行成功，就是因为byName失败后，自动使用byType赋值。
 
-​	
-
-
+​    
 
 ## 配置文件和注解两种方式
 
@@ -277,4 +249,3 @@ public class Student {
 但是如果修改较多的话，那么就可以使用配置文件。
 
 如果不需要怎么改变修改的，就可以使用注解。
-
