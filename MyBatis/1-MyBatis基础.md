@@ -73,7 +73,7 @@ public interface StudentDao {
 
 ### 创建主配置文件
 
-这个配置文件时MyBatis的主配置文件，一个项目中只有一个主配置文件，它提供了数据库的连接信息和sql映射文件的位置信息。
+这个配置文件是MyBatis的主配置文件，一个项目中只有一个主配置文件，它提供了数据库的连接信息和sql映射文件的位置信息。
 
 ### 使用mybatis访问数据库(使用SqlSession，最简单的一种情况)
 
@@ -149,8 +149,8 @@ public interface StudentDao {
 
 在当前文件中，可以使用特定的标签来表示数据库的特定操作。
 
-- `<select>`：表示查询操作
-- `<update>`：表示更新操作
+- `<select>`：查询操作
+- `<update>`：更新操作
 - `<insert>`：插入操作
 - `<delete>`：删除操作
 

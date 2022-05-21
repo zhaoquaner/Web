@@ -44,7 +44,7 @@ context是指对应的命名空间，`xmlns:context="http://www.springframework.
 
 属性：value，表示这个对象的名称，是唯一的。也可以省略value，直接写对象名称，必须加引号
 
-​                如果不写这个属性，那么spring会使用默认的对象名称：类名的首字母小写，例如类名为Student，那么默认名称为                                      student
+如果不写这个属性，那么spring会使用默认的对象名称：类名的首字母小写，例如类名为Student，那么默认名称为student
 
 位置：在类的上面
 
@@ -85,11 +85,11 @@ public class Student {
 
 ### @Value(简单类型的赋值)
 
-​    用来给简单类型的属性赋值
+用来给简单类型的属性赋值
 
-​    属性：value，String类型，表示简单类型的属性值。可不写value，直接写属性值。必须加引号
+属性：value，String类型，表示简单类型的属性值。可不写value，直接写属性值。必须加引号
 
-​    位置： 
+位置： 
 
 1. 在属性定义上面，不需要set方法，推荐使用这种
 2. 在set方法上面

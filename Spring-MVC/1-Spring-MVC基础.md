@@ -270,7 +270,7 @@ public class MyController {
 
 2. tomcat服务器通过配置文件web.xml直到some.do的请求应该给DispatherServlet
 
-3. DispatherServlet根据springmvc配置文件springnvc.xml知道要把请求转发给doSome()方法
+3. DispatherServlet根据springmvc配置文件springmvc.xml知道要把请求转发给doSome()方法
 
 4. doSome方法处理请求，返回ModelAndView对象
 

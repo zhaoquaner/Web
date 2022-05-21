@@ -1,7 +1,7 @@
 # 4-SSM整合开发
 
 开发思路：
-        SpringMVC：管理Controller层对象
+     SpringMVC：管理Controller层对象
 
 Spring：管理Service和dao层，和工具类对象
 
@@ -13,7 +13,7 @@ MyBatis：负责数据访问
 
 一共有两个容器：
 
-- SpringMVC容器，管理COntroller控制器对象
+- SpringMVC容器，管理Controller控制器对象
 - Spring容器，管理Service、Dao、工具类对象
 
 要把合适的对象交给合适的容器管理。

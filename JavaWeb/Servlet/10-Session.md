@@ -18,8 +18,6 @@ Session比Cookie使用方便，Session可以解决Cookie解决不了的事，适
 
 
 
-
-
 ## Seesion API
 
 - long getCreationTime()：获取Seesion被创建的时间
@@ -84,11 +82,11 @@ System.out.println(value);
 
 **简单来说，一个客户端的一个处于打开状态的浏览器对应一个Session。**
 
-**需要注意的是，例如，谷歌浏览器访问一个网站，在不关闭前一个浏览器的情况下，再打开一个谷歌浏览器窗口打开同一个网站，访问的是一个Session。但是如果关闭了前一个浏览器，再打开浏览器打开该网站，那么就会创建新的Session。**
+**需要注意的是，例如，谷歌浏览器访问一个网站，在不关闭前一个浏览器的情况下，再打开一个谷歌浏览器窗口打开同一个网站，访问的是一个Session。但是如果关闭了前一个浏览器，再打开该浏览器打开该网站，那么就会创建新的Session。**
 
 
 
-但是，如果按照上述代码，在浏览器新建一个会话，先访问Servlet1，那么会出现空指针异常。
+但是，如果按照上述代码，在浏览器新建一个会话，先访问Servlet2，那么会出现空指针异常。
 
 那么问题来了：服务器是如何实现一个session为一个用户浏览器服务的呢？换个说法：为什么服务器能够为不同用户浏览器提供不同session？
 
@@ -116,7 +114,7 @@ System.out.println(value);
 
 ### URL地址重写
 
-前面提到，Session使通过Cookie来识别浏览器，但是如果用户浏览器禁用了Cookie（**注意，禁用Cookie意味着浏览器不能向服务器发送Cookie，但是浏览器还是可以接受Cookie，也就是响应头可以有Cookie，但是请求头不能有**），那么应该怎么办，JavaWeb提供了另一种方式：URL地址重写
+前面提到，Session是通过Cookie来识别浏览器，但是如果用户浏览器禁用了Cookie（**注意，禁用Cookie意味着浏览器不能向服务器发送Cookie，但是浏览器还是可以接受Cookie，也就是响应头可以有Cookie，但是请求头不能有**），那么应该怎么办，JavaWeb提供了另一种方式：URL地址重写
 
 HttpServletResponse类提供了两个URL地址重写的方法：
 
@@ -153,7 +151,7 @@ URL地址重写的原理为：将Session的id重写到URL地址中，服务器�
 
 Session在用户第一次访问服务端Servlet，jsp等动态资源时就会自动创建，Session对象保存在内存中。
 
-Session生成后，只要用户继续访问，服务器就会更新Session的最后反访问时间，无论是否对Session进行读写，服务器都会认为Session活跃了一次。
+Session生成后，只要用户继续访问，服务器就会更新Session的最后访问时间，无论是否对Session进行读写，服务器都会认为Session活跃了一次。
 
 由于随着越来越多用户访问服务器，因此Session也越来越多，为了防止内存溢出，服务器会把长时间没有活跃的Session从内存中删除，这个时间就是Session的超时时间。
 

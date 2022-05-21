@@ -67,10 +67,6 @@ spring.datasource.password=
 
 在SpringBoot项目中，使用@Mapper注解即可，表示将该对象加入到Spring容器中。
 
-
-
-
-
 做完这三步，剩下就和SSM没什么区别了，正常使用。
 
 

@@ -1,8 +1,8 @@
 # 1-SpringBoot概述
 
-​		SpringBoot的设计目的是**简化**Spring应用的初始搭建和开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不需要定义样板化的配置。
+SpringBoot的设计目的是**简化**Spring应用的初始搭建和开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不需要定义样板化的配置。
 
-​		在以往采用SpringMVC+Spring+MyBatis开发时，搭建和整合三大框架，需要做很多工作，配置web.xml。配置Spring和MyBatis。而SpringBoot框架对此开发过程进行了革命性颠覆，完全抛弃了繁琐的xml配置过程，采用大量默认配置来简化开发过程。
+在以往采用SpringMVC+Spring+MyBatis开发时，搭建和整合三大框架，需要做很多工作，配置web.xml。配置Spring和MyBatis。而SpringBoot框架对此开发过程进行了革命性颠覆，完全抛弃了繁琐的xml配置过程，采用大量默认配置来简化开发过程。
 
 ​		
 
@@ -15,7 +15,7 @@ SpringBoot有这些特性：
 3. 提供约定的starter POM来简化Maven配置，使Maven配置更简单
 4. 自动化配置，根据项目Maven依赖配置，SpringBoot自动配置Spring、SpringMVC。
 5. 提供了程序的健康检查功能
-6. 基本完全不使用XML配置文件，采用注解配置
+6. 基本不使用XML配置文件，采用注解配置
 
 
 
@@ -122,7 +122,7 @@ SpringBoot的pom文件：
 
 - mvn、mvnw、mvnw.cmd：使用脚本执行maven相关命令，用的较少，可以删除
 - gitignore：使用版本控制工具git时，设置忽略提交的内容
-- static、templates：后面模块技术存放文件的目录
+- static、templates：后面模板技术存放文件的目录
 - application.properties：SpringBoot 的配置文件，集成的配置都可以在该文件中进行配置，例如Spring、SpringMVC、MyBatis和Redis等。
 - Application.java：SpringBoot程序执行入口，执行该程序中main方法，SpringBoot就启动了。
 

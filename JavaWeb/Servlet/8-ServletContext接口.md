@@ -4,7 +4,7 @@
 
 ServletContext对象被称为域对象，或者全局作用域对象，可以把它理解为一个容器，我们把需要共享的数据放到这个容器中，需要对应数据的Servlet对象就从这个容器中拿。
 
-​			实现Servlet通讯要用ServletContext的`setAttribute(String name, Object obj)`方法，第一个参数为变量名，第二个参数为变量值；然后使用`servletContext.getAttribute(String name)`获取指定变量值，需要强制类型转换，例如：
+实现Servlet通讯要用ServletContext的`setAttribute(String name, Object obj)`方法，第一个参数为变量名，第二个参数为变量值；然后使用`servletContext.getAttribute(String name)`获取指定变量值，需要强制类型转换，例如：
 
 ```java
 //第一个Servlet代码

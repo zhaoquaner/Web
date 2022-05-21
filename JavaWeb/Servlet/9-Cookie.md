@@ -44,7 +44,7 @@ Cookie类用于创建一个Cookie对象，一个Cookie只能放一个键值对�
 - setValue()和getValue方法
 - setMaxAge和getMaxAge方法
 - setPath和getPath方法
-- setMomain和getDomain方法
+- setDomain和getDomain方法
 - getName方法
 
 
@@ -123,7 +123,7 @@ Cookie的domain属性决定了运行访问的域名，domain的值格式规定�
 
 
 
-如果希望一级域名相同的网页Cookie时间可以相互访问，就需要是那必用domain方法
+如果希望一级域名相同的网页Cookie时间可以相互访问，就需要使用domain方法
 
 例如：
 
@@ -134,7 +134,7 @@ cookie.setDomain(".google.com");
 response.addCookie(cookie);
 ```
 
-即使用`cookie.setDomain()`来进行设置。
+即  使用`cookie.setDomain()`来进行设置。
 
 
 
@@ -171,13 +171,15 @@ HTTP协议不仅仅是无状态的，也是不安全的。如果不希望Cookie�
 
 - 访问Servlet只有两种情况:
 
-    										1. 第一次访问
-       										2. 已经访问过了
+    									1. 第一次访问
+       2. 已经访问过了
+
+    
 
     所以需要判断一下是第一次访问，还是已经访问过了
 
     代码如下：
-
+    
     ```java
     public class OneServlet extends HttpServlet {
     
@@ -218,7 +220,7 @@ HTTP协议不仅仅是无状态的，也是不安全的。如果不希望Cookie�
         }
     }
     ```
-
+    
     
 
 

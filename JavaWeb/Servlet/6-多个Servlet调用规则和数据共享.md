@@ -31,7 +31,7 @@
 
 ### 请求转发解决方案
 
-工作原理：用户第一次通过手动要求浏览器访问OneServlet，然后OneServlet工作完毕后，通过当前的请求对象代替浏览器向Tomcat发送请求，调用TwoServlet，然后Tomcat调用TwOServlet
+工作原理：用户第一次通过手动要求浏览器访问OneServlet，然后OneServlet工作完毕后，通过当前的请求对象代替浏览器向Tomcat发送请求，调用TwoServlet，然后Tomcat调用TwoServlet
 
 实现命令：请求对象代替浏览器向Tomcat发送请求，
 
